@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.QianDaoMapper">
+
+    <!-- 该mapper用于CRUD学生的签到记录 -->
+
+    <!--学生提交签到-->
+    <insert id="insertQd" parameterType="QianDao" useGeneratedKeys="true" keyProperty="qd_id">
+        insert into
+    t_qiandao(qd_created_time,qd_state, department,classname,xs_acc_username,xs_realname, ls_acc_username,ls_realname,qd_rw_id)
+        values
+    (#{qd_created_time},#{qd_state},#{department},#{className},#{xs_acc_username},#{xs_realName},#{ls_acc_username},#{ls_realName},#{qd_rw_id})
+    </insert>
+
+
+    <resultMap id="QdMap" type="QianDao">
+        <result column="qd_id" property="qd_id"/>
+        <result column="qd_created_time" property="qd_created_time"/>
+        <result column="qd_state" property="qd_state"/>
+        <result column="department" property="department"/>
+        <result column="classname" property="className"/>
+        <result column="ls_realname" property="ls_realName"/>
+        <result column="ls_acc_username" property="ls_acc_username"/>
+        <result column="xs_realname" property="xs_realName"/>
+        <result column="xs_acc_username" property="xs_acc_username"/>
+        <result column="qd_rw_id" property="qd_rw_id"/>
+    </resultMap>
+
+    <select id="selectQdListByQdRwId"  resultMap="QdMap">
+        select * from t_qiandao where qd_rw_id = #{qd_rw_id} order by qd_id desc
+    </select>
+
+    <select id="selectQdByQdRwIdAndUsername" resultMap="QdMap">
+    select * from t_qiandao where xs_acc_username = #{username} AND qd_rw_id = #{id}
+    </select>
+
+    <select id="selectQdById" resultMap="QdMap">
+        select * from t_qiandao where qd_id = #{qd_id}
+    </select>
+
+    <select id="selectQdByUsername" resultMap="QdMap">
+        select * from t_qiandao where xs_acc_username = #{xs_username}
+    </select>
+</mapper>

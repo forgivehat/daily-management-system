@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.QianDaoRenWuMapper">
+
+    <!-- 该mapper用于CRUD老师发布的签到任务的信息 -->
+
+
+    <!--老师发布假条-->
+    <insert id="insertQdRw" parameterType="QianDaoRenWu" useGeneratedKeys="true" keyProperty="qd_rw_id">
+        insert into t_qiandao_renwu(qd_rw_start_time, qd_rw_end_time, department, classname, ls_realname, ls_acc_username)
+         values(#{qd_rw_start_time},#{qd_rw_end_time},#{department},#{className},#{ls_realName},#{ls_acc_username})
+    </insert>
+
+    <resultMap id="QdRwMap" type="QianDaoRenWu">
+        <result column="qd_rw_id" property="qd_rw_id"/>
+        <result column="qd_rw_start_time" property="qd_rw_start_time"/>
+        <result column="qd_rw_end_time" property="qd_rw_end_time"/>
+        <result column="department" property="department"/>
+        <result column="classname" property="className"/>
+        <result column="ls_realname" property="ls_realName"/>
+        <result column="ls_acc_username" property="ls_acc_username"/>
+    </resultMap>
+
+    <select id="selectQdRwListByLaoShiUsername" parameterType="String" resultMap="QdRwMap">
+            select * from t_qiandao_renwu where ls_acc_username = #{ls_acc_username} order by qd_rw_id desc
+    </select>
+
+    <select id="selectQdRwListByClassName" parameterType="String" resultMap="QdRwMap">
+        select * from t_qiandao_renwu where classname = #{className} order by qd_rw_id desc
+    </select>
+
+    <select id="selectQdRwById" parameterType="Integer" resultMap="QdRwMap">
+        select * from t_qiandao_renwu where qd_rw_id = #{qd_rw_id} order by qd_rw_id desc
+    </select>
+
+</mapper>

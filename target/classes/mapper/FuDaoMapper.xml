@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.FuDaoMapper">
+
+    <!-- 该mapper用于CRUD辅导员的信息 -->
+
+
+    <resultMap id="FuDaoMap" type="FuDao">
+        <result column="fd_id" property="fd_id"/>
+        <result column="fd_realname" property="fd_realName"/>
+        <result column="fd_tel" property="fd_tel"/>
+        <result column="acc_id" property="acc_id"/>
+        <result column="department" property="department"/>
+        <result column="acc_username" property="acc_username"/>
+    </resultMap>
+
+    <select id="selectFuDaoByUsername" parameterType="String" resultMap="FuDaoMap">
+        select * from t_fudao where acc_username = #{acc_username}
+    </select>
+
+</mapper>

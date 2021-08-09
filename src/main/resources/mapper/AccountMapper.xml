@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 该mapper用于CRUD账户的信息 -->
+<mapper namespace="com.boot.mapper.AccountMapper">
+
+    <!--keyProperty="id"  其中id为Account类中叫做“id”的成员变量-->
+    <insert id="insertUser" parameterType="Account" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_account(acc_username,acc_password,acc_role)
+        values (#{username},#{password},#{role})
+    </insert>
+
+    <update id="updateAccount" parameterType="Account">
+        update  t_account set
+                acc_password = #{password}
+        where acc_username = #{username}
+    </update>
+
+
+    <resultMap id="AccountMapIncludePwd" type="Account">
+    <result property="id" column="acc_id"/>
+    <result property="username" column="acc_username"/>
+    <result property="password" column="acc_password"/>
+    <result property="role" column="acc_role"/>
+    </resultMap>
+
+    <select id="selectByUsername" parameterType="String" resultMap="AccountMapIncludePwd">
+        SELECT * FROM t_account WHERE acc_username = #{username}
+    </select>
+
+    <select id="selectAccBySelectiveRole" resultMap="AccountMapIncludePwd">
+        select * from t_account
+            <where>
+                <if test="acc_role != null">acc_role = #{role}</if>
+            </where>
+    </select>
+
+    <select id="selectUserById"  resultMap="AccountMapIncludePwd" >
+        SELECT * FROM t_account where acc_id = #{id}
+</select>
+
+    <delete id="deleteAccount" >
+        delete from t_account where acc_id = #{id}
+    </delete>
+
+
+
+</mapper>

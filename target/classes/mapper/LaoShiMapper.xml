@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.LaoShiMapper">
+
+    <!-- 该mapper用于CRUD老师的信息 -->
+
+    <resultMap id="LaoShiMap" type="LaoShi">
+        <result column="ls_id" property="ls_id"/>
+        <result column="ls_realname" property="ls_realName"/>
+        <result column="ls_tel" property="ls_tel"/>
+        <result column="acc_id" property="acc_id"/>
+        <result column="department" property="department"/>
+        <result column="acc_username" property="acc_username"/>
+    </resultMap>
+
+    <select id="selectLaoShiByUsername" parameterType="String" resultMap="LaoShiMap">
+        select * from t_laoshi where acc_username = #{acc_username}
+    </select>
+
+</mapper>
